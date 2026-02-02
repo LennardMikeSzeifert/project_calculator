@@ -1,3 +1,13 @@
+// const calculatorContainer = document.querySelector(`.calculator-container`);
+// let num = 9;
+// for (let i = 0; i <= 9; i++) {
+//   const button = document.createElement(`button`);
+//   button.textContent = `${num}`;
+//   button.className = `button button${num--}`;
+//   calculatorContainer.appendChild(button);
+//   console.log(button);
+// }
+
 let num1;
 let operator;
 let num2;
