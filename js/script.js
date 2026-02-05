@@ -8,9 +8,9 @@
 //   console.log(button);
 // }
 
-let num1;
+let num1 = ``;
 let operator;
-let num2;
+let num2 = ``;
 
 const add = function (a, b) {
   return a + b;
@@ -80,4 +80,55 @@ function operate(num1, operator, num2) {
   }
 }
 
-console.log(operate(5, `fact`));
+// console.log(operate(5, `fact`));
+
+const resultDisplay = document.querySelector(`.result-display-container`);
+const buttons = document.querySelectorAll(`.button`);
+const numerical = `0123456789.()%`;
+const operators = `+-*/powfactmod`;
+let elementNum1 = document.createElement(`p`);
+let elementOperator = document.createElement(`p`);
+let elementNum2 = document.createElement(`p`);
+elementNum1.className = `calculator-element`;
+elementOperator.className = `calculator-element`;
+elementNum2.className = `calculator-element`;
+
+function updateNum1(e) {
+  if (numerical.includes(e.target.textContent)) {
+    num1 += e.target.textContent;
+  }
+}
+
+function updateOperator(e) {
+  operator = e.target.textContent;
+}
+
+function updateNum2(e) {
+  if (numerical.includes(e.target.textContent)) {
+    num2 += e.target.textContent;
+  }
+}
+buttons.forEach((button) =>
+  button.addEventListener(`click`, function (e) {
+    while (!operator) {
+      updateNum1(e);
+      elementNum1.textContent = `${num1}`;
+      resultDisplay.appendChild(elementNum1);
+      break;
+    }
+    if (operators.includes(e.target.textContent)) {
+      updateOperator(e);
+      elementOperator.textContent = `${operator}`;
+      resultDisplay.appendChild(elementOperator);
+    }
+    while (operator != undefined) {
+      updateNum2(e);
+      elementNum2.textContent = `${num2}`;
+      resultDisplay.appendChild(elementNum2);
+      break;
+    }
+    // console.log(`num1: ${num1}`);
+    // console.log(`operator: ${operator}`);
+    // console.log(`num2: ${num2}`);
+  }),
+);
