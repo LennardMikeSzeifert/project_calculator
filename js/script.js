@@ -11,25 +11,41 @@
 let num1 = ``;
 let operator;
 let num2 = ``;
+const resultDisplay = document.querySelector(`.result-display-container`);
+const buttons = document.querySelectorAll(`.button`);
+const numerical = `0123456789.()%`;
+const operators = `+-*/powfactmod`;
+const elementNum1 = document.createElement(`p`);
+const elementOperator = document.createElement(`p`);
+const elementNum2 = document.createElement(`p`);
+elementNum1.className = `calculator-element`;
+elementOperator.className = `calculator-element`;
+elementNum2.className = `calculator-element`;
+const equals = document.querySelector(`.equals`);
+const elementEquals = document.createElement(`p`);
+elementEquals.textContent = `=`;
+elementEquals.className = `calculator-element`;
+const elementResult = document.createElement(`p`);
+elementResult.className = `calculator-element`;
 
 const add = function (a, b) {
-  return a + b;
+  return +a + +b;
 };
 
 const subtract = function (a, b) {
-  return a - b;
+  return +a - +b;
 };
 
 const mulitply = function (a, b) {
-  return a * b;
+  return +a * +b;
 };
 
 const divide = function (a, b) {
-  return a / b;
+  return +a / +b;
 };
 
 const modulus = function (a, b) {
-  return a % b;
+  return +a % +b;
 };
 
 const multiplyArr = function (array) {
@@ -41,12 +57,12 @@ const sum = function (array) {
 };
 
 const power = function (base, exponent) {
-  return base ** exponent;
+  return (+base) ** +exponent;
 };
 
 const factorial = function (n) {
   let product = 1;
-  for (let i = n; i > 0; i--) {
+  for (let i = +n; i > 0; i--) {
     product *= i;
   }
   return product;
@@ -66,10 +82,10 @@ function operate(num1, operator, num2) {
     case `/`:
       return divide(num1, num2);
       break;
-    case `**`:
+    case `pow`:
       return power(num1, num2);
       break;
-    case `%`:
+    case `mod`:
       return modulus(num1, num2);
       break;
     case `fact`:
@@ -79,19 +95,6 @@ function operate(num1, operator, num2) {
       alert`Please enter two numbers and one operator.`;
   }
 }
-
-// console.log(operate(5, `fact`));
-
-const resultDisplay = document.querySelector(`.result-display-container`);
-const buttons = document.querySelectorAll(`.button`);
-const numerical = `0123456789.()%`;
-const operators = `+-*/powfactmod`;
-let elementNum1 = document.createElement(`p`);
-let elementOperator = document.createElement(`p`);
-let elementNum2 = document.createElement(`p`);
-elementNum1.className = `calculator-element`;
-elementOperator.className = `calculator-element`;
-elementNum2.className = `calculator-element`;
 
 function updateNum1(e) {
   if (numerical.includes(e.target.textContent)) {
@@ -121,14 +124,17 @@ buttons.forEach((button) =>
       elementOperator.textContent = `${operator}`;
       resultDisplay.appendChild(elementOperator);
     }
-    while (operator != undefined) {
+    while (operator != undefined && !elementResult.textContent) {
       updateNum2(e);
       elementNum2.textContent = `${num2}`;
       resultDisplay.appendChild(elementNum2);
       break;
     }
-    // console.log(`num1: ${num1}`);
-    // console.log(`operator: ${operator}`);
-    // console.log(`num2: ${num2}`);
   }),
 );
+
+equals.addEventListener(`click`, function () {
+  resultDisplay.appendChild(elementEquals);
+  elementResult.textContent = `${operate(num1, operator, num2)}`;
+  resultDisplay.appendChild(elementResult);
+});
