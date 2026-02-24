@@ -9,7 +9,7 @@
 // }
 
 let num1 = ``;
-let operator;
+let operator = ``;
 let num2 = ``;
 const resultDisplay = document.querySelector(`.result-display-container`);
 const buttons = document.querySelectorAll(`.button`);
@@ -111,29 +111,38 @@ function updateNum2(e) {
     num2 += e.target.textContent;
   }
 }
+
 buttons.forEach((button) =>
   button.addEventListener(`click`, function (e) {
-    while (!operator) {
+    if (numerical.includes(e.target.textContent) && operator === ``) {
       updateNum1(e);
       elementNum1.textContent = `${num1}`;
       resultDisplay.appendChild(elementNum1);
-      break;
     }
-    if (operators.includes(e.target.textContent)) {
+    if (operators.includes(e.target.textContent) && num2 === ``) {
       updateOperator(e);
       elementOperator.textContent = `${operator}`;
       resultDisplay.appendChild(elementOperator);
     }
-    while (operator != undefined && !elementResult.textContent) {
+    if (numerical.includes(e.target.textContent) && operator != ``) {
       updateNum2(e);
       elementNum2.textContent = `${num2}`;
       resultDisplay.appendChild(elementNum2);
-      break;
     }
+    if (operators.includes(e.target.textContent) && num2 != ``) {
+      elementNum1.textContent = operate(num1, operator, num2);
+      num1 = operate(num1, operator, num2);
+      updateOperator(e);
+      elementOperator.textContent = `${operator}`;
+
+      elementNum2.textContent = ``;
+      num2 = ``;
+    }
+    console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}`);
   }),
 );
 
-equals.addEventListener(`click`, function () {
+equals.addEventListener(`click`, function displayResult() {
   resultDisplay.appendChild(elementEquals);
   elementResult.textContent = `${operate(num1, operator, num2)}`;
   resultDisplay.appendChild(elementResult);
