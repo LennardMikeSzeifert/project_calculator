@@ -27,6 +27,7 @@ elementEquals.textContent = `=`;
 elementEquals.className = `calculator-element`;
 const elementResult = document.createElement(`p`);
 elementResult.className = `calculator-element`;
+const resetBtn = document.querySelector(`.reset`);
 
 const add = function (a, b) {
   return +a + +b;
@@ -146,4 +147,12 @@ equals.addEventListener(`click`, function displayResult() {
   resultDisplay.appendChild(elementEquals);
   elementResult.textContent = `${operate(num1, operator, num2)}`;
   resultDisplay.appendChild(elementResult);
+
+  resetBtn.addEventListener(`click`, function removeDisplayElements() {
+    let calculatorElements = document.querySelectorAll(`.calculator-element`);
+    num1 = ``;
+    num2 = ``;
+    operator = ``;
+    calculatorElements.forEach((element) => element.remove());
+  });
 });
