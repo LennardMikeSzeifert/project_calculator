@@ -13,7 +13,7 @@ let operator = ``;
 let num2 = ``;
 const resultDisplay = document.querySelector(`.result-display-container`);
 const buttons = document.querySelectorAll(`.button`);
-const numerical = `0123456789.()%`;
+const numerical = `0123456789.()`;
 const operators = `+-*/powfactmod`;
 const elementNum1 = document.createElement(`p`);
 const elementOperator = document.createElement(`p`);
@@ -29,6 +29,7 @@ const elementResult = document.createElement(`p`);
 elementResult.className = `calculator-element`;
 const resetBtn = document.querySelector(`.reset`);
 const deleteBtn = document.querySelector(`.undo`);
+const percentBtn = document.querySelector(`.percentage`);
 
 const add = function (a, b) {
   return +a + +b;
@@ -169,4 +170,22 @@ deleteBtn.addEventListener(`click`, function deleteLastElement() {
     operator = ``;
   }
   lastItem.remove();
+});
+percentBtn.addEventListener(`click`, function convertToPercentage() {
+  const calculatorElements = document.querySelectorAll(`.calculator-element`);
+  const lastElement = calculatorElements[calculatorElements.length - 1];
+  if (lastElement.textContent === num1) {
+    num1 *= 0.1;
+    elementNum1.textContent *= 0.1;
+  } else if (lastElement.textContent === num2) {
+    num2 *= 0.1;
+    elementNum2.textContent *= 0.1;
+  } else {
+    alert(`Error`);
+    const calculatorElements = document.querySelectorAll(`.calculator-element`);
+    num1 = ``;
+    num2 = ``;
+    operator = ``;
+    calculatorElements.forEach((element) => element.remove());
+  }
 });
