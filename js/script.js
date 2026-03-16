@@ -51,14 +51,6 @@ const modulus = function (a, b) {
   return +a % +b;
 };
 
-const multiplyArr = function (array) {
-  return array.reduce((total, current) => (total *= current), 1);
-};
-
-const sum = function (array) {
-  return array.reduce((total, current) => (total += current), 0);
-};
-
 const power = function (base, exponent) {
   return (+base) ** +exponent;
 };
@@ -137,17 +129,16 @@ buttons.forEach((button) =>
       num1 = operate(num1, operator, num2);
       updateOperator(e);
       elementOperator.textContent = `${operator}`;
-
       elementNum2.textContent = ``;
       num2 = ``;
     }
-    console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}`);
+    // console.log(`num1: ${num1}, num2: ${num2}, operator: ${operator}`);
   }),
 );
 
 equals.addEventListener(`click`, function displayResult() {
   resultDisplay.appendChild(elementEquals);
-  elementResult.textContent = `${operate(num1, operator, num2)}`;
+  elementResult.textContent = `${operate(Math.round(num1 * 100) / 100, operator, Math.round(num2 * 100) / 100)}`;
   resultDisplay.appendChild(elementResult);
 });
 
@@ -177,9 +168,11 @@ percentBtn.addEventListener(`click`, function convertToPercentage() {
   if (lastElement.textContent === num1) {
     num1 *= 0.1;
     elementNum1.textContent *= 0.1;
+    elementNum1.textContent = Math.round(elementNum1.textContent * 100) / 100;
   } else if (lastElement.textContent === num2) {
     num2 *= 0.1;
     elementNum2.textContent *= 0.1;
+    elementNum2.textContent = Math.round(elementNum2.textContent * 100) / 100;
   } else {
     alert(`Error`);
     const calculatorElements = document.querySelectorAll(`.calculator-element`);
