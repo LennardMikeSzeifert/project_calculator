@@ -22,9 +22,6 @@ elementNum1.className = `calculator-element`;
 elementOperator.className = `calculator-element`;
 elementNum2.className = `calculator-element`;
 const equals = document.querySelector(`.equals`);
-const elementEquals = document.createElement(`p`);
-elementEquals.textContent = `=`;
-elementEquals.className = `calculator-element`;
 const elementResult = document.createElement(`p`);
 elementResult.className = `calculator-element`;
 const resetBtn = document.querySelector(`.reset`);
@@ -137,7 +134,7 @@ function updateDisplay(e) {
 }
 
 buttons.forEach((button) =>
-  button.addEventListener(`click`, function (e) {
+  button.addEventListener(`click`, function updateDisplay(e) {
     if (numerical.includes(e.target.textContent) && operator === ``) {
       updateNum1(e);
       elementNum1.textContent = `${num1}`;
@@ -166,10 +163,13 @@ buttons.forEach((button) =>
 );
 
 equals.addEventListener(`click`, function displayResult() {
-  resultDisplay.appendChild(elementEquals);
   let result = Math.round(operate(num1, operator, num2) * 100) / 100;
-  elementResult.textContent = `${result}`;
-  resultDisplay.appendChild(elementResult);
+  num1 = result;
+  elementNum1.textContent = result;
+  num2 = ``;
+  operator = ``;
+  elementNum2.remove();
+  elementOperator.remove();
 });
 
 resetBtn.addEventListener(`click`, function removeDisplayElements() {
